@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#17283a"/><stop offset=".48" stop-color="#bd704b"/><stop offset="1" stop-color="#edb477"/></linearGradient>
+ <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c68a58"/><stop offset="1" stop-color="#70452f"/></linearGradient>
+ <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c58a5d"/><stop offset="1" stop-color="#70432f"/></linearGradient>
+ <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#101923" stop-opacity=".4"/><stop offset=".4" stop-color="#101923" stop-opacity="0"/><stop offset="1" stop-color="#101923" stop-opacity=".2"/></linearGradient>
+ <pattern id="grain" width="44" height="44" patternUnits="userSpaceOnUse"><circle cx="5" cy="9" r="1" fill="#f6d5a0" opacity=".12"/><circle cx="31" cy="30" r="1" fill="#251c17" opacity=".13"/></pattern>
+</defs>
+<rect width="1920" height="1080" fill="url(#sky)"/>
+<circle cx="1390" cy="270" r="105" fill="#ffd39a" opacity=".78"/>
+<circle cx="1390" cy="270" r="145" fill="#ffd39a" opacity=".12"/>
+<path d="M0 510 L130 425 250 470 385 390 510 465 650 400 790 485 940 390 1080 460 1220 385 1370 455 1510 400 1660 470 1790 415 1920 465 V740 H0Z" fill="#77513e" opacity=".58"/>
+<path d="M0 610 L170 520 320 575 470 485 610 555 770 500 930 590 1100 500 1260 570 1410 495 1570 565 1730 500 1920 560 V830 H0Z" fill="#956448" opacity=".8"/>
+<!-- old kasbah walls and towers -->
+<g fill="url(#wall)" stroke="#4d3327" stroke-opacity=".5" stroke-width="5">
+ <path d="M630 705 V505 H760 V705Z"/><path d="M615 510 L695 465 775 510Z"/>
+ <path d="M760 705 V565 H900 V705Z"/><path d="M745 570 L830 525 915 570Z"/>
+ <path d="M900 705 V445 H1060 V705Z"/><path d="M885 450 L980 395 1075 450Z"/>
+ <path d="M1060 705 V535 H1195 V705Z"/><path d="M1045 540 L1128 495 1210 540Z"/>
+ <path d="M1195 705 V485 H1325 V705Z"/><path d="M1180 490 L1260 445 1340 490Z"/>
+ <path d="M1325 705 V555 H1445 V705Z"/><path d="M1310 560 L1385 520 1460 560Z"/>
+ <path d="M555 715 V620 H630 V715Z"/><path d="M545 625 L592 590 640 625Z"/>
+ <path d="M1445 715 V610 H1525 V715Z"/><path d="M1435 615 L1485 580 1535 615Z"/>
+</g>
+<!-- battlements -->
+<g fill="#a86f4b"><path d="M625 490h20v-20h20v20h25v-20h20v20h25v-20h20v20h20v20H625Z"/><path d="M885 430h25v-22h20v22h30v-22h20v22h30v-22h20v22h25v20H885Z"/><path d="M1175 470h25v-20h20v20h30v-20h20v20h30v-20h20v20h20v20H1175Z"/></g>
+<!-- dark windows -->
+<g fill="#34271f"><path d="M675 555h28v58h-28zM810 600h28v55h-28zM950 495h28v64h-28zM1010 495h28v64h-28zM1110 575h28v58h-28zM1235 535h28v64h-28zM1370 600h26v55h-26z"/></g>
+<!-- central arched entrance -->
+<path d="M935 705 V640 A45 45 0 0 1 1025 640 V705Z" fill="#271f1b"/>
+<path d="M950 705 V644 A30 30 0 0 1 1010 644 V705Z" fill="#4a3024"/>
+<!-- desert ground -->
+<path d="M0 720 Q230 655 430 735 T850 735 T1300 715 T1920 700 V1080 H0Z" fill="url(#sand)"/>
+<path d="M0 830 Q240 765 450 830 T900 825 T1380 805 T1920 790 V1080 H0Z" fill="#805033" opacity=".75"/>
+<path d="M0 935 Q270 855 560 920 T1120 920 T1630 885 T1920 910 V1080 H0Z" fill="#5c3b2a" opacity=".72"/>
+<!-- rocks -->
+<g fill="#4e3829"><path d="M410 835l25-48 35 18 19 30-20 20h-52z"/><path d="M1530 825l38-54 44 22 19 38-25 20h-62z"/><path d="M1710 900l25-36 32 12 21 26-12 18h-55z"/></g>
+<!-- distant operators as atmospheric silhouettes -->
+<g fill="#1a2428" opacity=".88">
+ <g transform="translate(1180 735) scale(1.2)"><path d="M-18 80l5-62 26 0 8 62 18 66h-18L0 105l-15 41h-18z"/><path d="M-21 20l2-26 38 0 4 28-10 30h-26z"/><circle cy="-14" r="14"/><path d="M-25 40l-18 40 9 8 27-34zM20 38l24 34-8 10-30-30z"/><path d="M-10 15l32 30-4 7-38-27z"/></g>
+ <g transform="translate(1515 750) scale(1.05)"><path d="M-18 80l5-62 26 0 8 62 18 66h-18L0 105l-15 41h-18z"/><path d="M-21 20l2-26 38 0 4 28-10 30h-26z"/><circle cy="-14" r="14"/><path d="M-25 40l-18 40 9 8 27-34zM20 38l24 34-8 10-30-30z"/><path d="M-10 15l32 30-4 7-38-27z"/></g>
+</g>
+<rect width="1920" height="1080" fill="url(#shade)"/>
+<rect width="1920" height="1080" fill="url(#grain)"/>
+</svg>
