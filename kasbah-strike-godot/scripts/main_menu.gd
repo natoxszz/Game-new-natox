@@ -107,19 +107,20 @@ func _build_interface() -> void:
 	nav.add_theme_constant_override("separation", 7)
 	add_child(nav)
 
-	_nav_button(nav, "01   JOUER EN SOLO", _start_solo, true)
-	_nav_button(nav, "02   HÉBERGER UNE PARTIE", func():
+	_nav_button(nav, "01   JOUER", func(): _show("home"), true)
+	_nav_button(nav, "02   AMIS", func(): _show("friends"))
+	_nav_button(nav, "03   JOUER EN SOLO", _start_solo)
+	_nav_button(nav, "04   HÉBERGER UNE PARTIE", func():
 		Settings.save()
 		var err := Net.host(int(Settings.v.port))
 		if err == OK:
 			get_tree().change_scene_to_file("res://scenes/lobby.tscn")
 		else:
 			status.text = "Hébergement impossible. Erreur %d" % err)
-	_nav_button(nav, "03   REJOINDRE UNE PARTIE", func(): _show("join"))
-	_nav_button(nav, "04   AMIS", func(): _show("friends"))
-	_nav_button(nav, "05   OPTIONS", func(): _show("options"))
+	_nav_button(nav, "05   REJOINDRE UNE PARTIE", func(): _show("join"))
+	_nav_button(nav, "06   OPTIONS", func(): _show("options"))
 
-	var quit_button := _nav_button(nav, "06   QUITTER", func(): get_tree().quit())
+	var quit_button := _nav_button(nav, "07   QUITTER", func(): get_tree().quit())
 	quit_button.modulate = Color(0.88, 0.66, 0.63)
 
 	var profile_label := _label("IDENTITÉ OPÉRATEUR", 11, TEXT_MUTED)
@@ -173,6 +174,7 @@ func _build_pages() -> void:
 
 	var friends := FriendsMenu.new()
 	friends.join_requested.connect(_join)
+	friends.closed.connect(func(): _show("home"))
 	_page(holder, "friends", friends)
 
 	var options := OptionsMenu.new()
