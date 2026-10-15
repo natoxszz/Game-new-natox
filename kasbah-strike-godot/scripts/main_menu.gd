@@ -37,9 +37,11 @@ func _build_backdrop() -> void:
 	add_child(viewport_container)
 
 	var viewport := SubViewport.new()
-	viewport.size = Vector2i(1280, 720)
+	viewport.name = "DesertViewport"
+	viewport.size = Vector2i(1920, 1080)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	viewport.handle_input_locally = false
+	viewport.gui_disable_input = true
 	viewport_container.add_child(viewport)
 
 	var backdrop := Node3D.new()
@@ -180,13 +182,36 @@ func _build_pages() -> void:
 func _home(holder: Control) -> void:
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(520, 290)
-	_style_panel(panel)
+	# La page d'accueil reste transparente : elle ne doit pas ressembler à une fenêtre bloquante.
+	var home_style := StyleBoxFlat.new()
+	home_style.bg_color = Color(0.025, 0.032, 0.041, 0.18)
+	home_style.border_color = Color(1, 1, 1, 0.0)
+	home_style.set_border_width_all(0)
+	home_style.set_corner_radius_all(0)
+	home_style.content_margin_left = 18
+	home_style.content_margin_right = 18
+	home_style.content_margin_top = 14
+	home_style.content_margin_bottom = 14
+	panel.add_theme_stylebox_override("panel", home_style)
 	var content := VBoxContainer.new()
 	content.add_theme_constant_override("separation", 13)
 	panel.add_child(content)
 
+	var header := HBoxContainer.new()
+	content.add_child(header)
 	var tag := _label("ZONE D'OPÉRATION  /  01", 12, ACCENT)
-	content.add_child(tag)
+	tag.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(tag)
+	var close_button := Button.new()
+	close_button.text = "×"
+	close_button.tooltip_text = "Masquer ce panneau"
+	close_button.custom_minimum_size = Vector2(38, 30)
+	close_button.add_theme_font_size_override("font_size", 22)
+	close_button.add_theme_color_override("font_color", TEXT_MAIN)
+	close_button.add_theme_stylebox_override("normal", _stylebox(Color(0.05, 0.06, 0.07, 0.65), Color(1, 1, 1, 0.12)))
+	close_button.add_theme_stylebox_override("hover", _stylebox(ACCENT, ACCENT))
+	close_button.pressed.connect(func(): pages["home"].visible = false)
+	header.add_child(close_button)
 
 	var heading := _label("LA KASBAH\nN'ATTEND QUE TOI.", 31, TEXT_MAIN)
 	heading.add_theme_font_size_override("font_size", 31)
