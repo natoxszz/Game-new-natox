@@ -105,10 +105,7 @@ func _build_interface() -> void:
 	nav.add_theme_constant_override("separation", 7)
 	add_child(nav)
 
-	_nav_button(nav, "01   JOUER EN SOLO", func():
-		Settings.save()
-		Net.solo()
-		get_tree().change_scene_to_file("res://scenes/game.tscn"), true)
+	_nav_button(nav, "01   JOUER EN SOLO", _start_solo, true)
 	_nav_button(nav, "02   HÉBERGER UNE PARTIE", func():
 		Settings.save()
 		var err := Net.host(int(Settings.v.port))
@@ -154,6 +151,11 @@ func _build_interface() -> void:
 	status.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(status)
+
+func _start_solo() -> void:
+	Settings.save()
+	Net.solo()
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func _build_pages() -> void:
 	var holder := Control.new()
