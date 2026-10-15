@@ -1,7 +1,6 @@
 extends Control
 ## Menu principal de Kasbah Strike. Le réseau existant reste inchangé.
 
-const BACKDROP_SCRIPT = preload("res://scripts/menu_backdrop.gd")
 
 var pages: Dictionary = {}
 var status: Label
@@ -29,28 +28,19 @@ func _ready() -> void:
 		status.text = "Connexion impossible. Vérifie le code, l'hôte et le port.")
 
 func _build_backdrop() -> void:
-	var viewport_container := SubViewportContainer.new()
-	viewport_container.name = "Menu3D"
-	viewport_container.set_anchors_preset(Control.PRESET_FULL_RECT)
-	viewport_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	viewport_container.stretch = true
-	add_child(viewport_container)
-
-	var viewport := SubViewport.new()
-	viewport.name = "DesertViewport"
-	viewport.size = Vector2i(1920, 1080)
-	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	viewport.handle_input_locally = false
-	viewport.gui_disable_input = true
-	viewport_container.add_child(viewport)
-
-	var backdrop := Node3D.new()
-	backdrop.set_script(BACKDROP_SCRIPT)
-	viewport.add_child(backdrop)
+	# Fond 2D fiable pour le menu : illustration désertique intégrée au projet.
+	var background := TextureRect.new()
+	background.name = "DesertBackground"
+	background.set_anchors_preset(Control.PRESET_FULL_RECT)
+	background.texture = load("res://menu_background.svg")
+	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	background.stretch_mode = TextureRect.STRETCH_SCALE
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(background)
 
 	var shade := ColorRect.new()
 	shade.name = "AtmosphereOverlay"
-	shade.color = Color(0.015, 0.022, 0.03, 0.25)
+	shade.color = Color(0.015, 0.022, 0.03, 0.18)
 	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
@@ -182,57 +172,17 @@ func _build_pages() -> void:
 	_page(holder, "options", options)
 
 func _home(holder: Control) -> void:
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(520, 290)
-	# La page d'accueil reste transparente : elle ne doit pas ressembler à une fenêtre bloquante.
-	var home_style := StyleBoxFlat.new()
-	home_style.bg_color = Color(0.025, 0.032, 0.041, 0.18)
-	home_style.border_color = Color(1, 1, 1, 0.0)
-	home_style.set_border_width_all(0)
-	home_style.set_corner_radius_all(0)
-	home_style.content_margin_left = 18
-	home_style.content_margin_right = 18
-	home_style.content_margin_top = 14
-	home_style.content_margin_bottom = 14
-	panel.add_theme_stylebox_override("panel", home_style)
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 13)
-	panel.add_child(content)
-
-	var header := HBoxContainer.new()
-	content.add_child(header)
-	var tag := _label("ZONE D'OPÉRATION  /  01", 12, ACCENT)
-	tag.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(tag)
-	var close_button := Button.new()
-	close_button.text = "×"
-	close_button.tooltip_text = "Masquer ce panneau"
-	close_button.custom_minimum_size = Vector2(38, 30)
-	close_button.add_theme_font_size_override("font_size", 22)
-	close_button.add_theme_color_override("font_color", TEXT_MAIN)
-	close_button.add_theme_stylebox_override("normal", _stylebox(Color(0.05, 0.06, 0.07, 0.65), Color(1, 1, 1, 0.12)))
-	close_button.add_theme_stylebox_override("hover", _stylebox(ACCENT, ACCENT))
-	close_button.pressed.connect(func(): pages["home"].visible = false)
-	header.add_child(close_button)
-
-	var heading := _label("LA KASBAH\nN'ATTEND QUE TOI.", 31, TEXT_MAIN)
-	heading.add_theme_font_size_override("font_size", 31)
-	content.add_child(heading)
-
-	var description := _label("Un FPS tactique dans un environnement désertique.\nChoisis ton camp. Prépare-toi. Passe à l'action.", 15, TEXT_MUTED)
-	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(description)
-
-	var line := ColorRect.new()
-	line.color = Color(1, 1, 1, 0.14)
-	line.custom_minimum_size = Vector2(0, 1)
-	content.add_child(line)
-
-	var meta := _label("2 CAMPS     •     COMBAT TACTIQUE     •     ENVIRONNEMENT DÉSERTIQUE", 11, TEXT_MAIN)
-	meta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(meta)
-
-	_page(holder, "home", panel)
+	# Page d'accueil volontairement dégagée : l'illustration reste visible.
+	var page := Control.new()
+	var hint := _label("SÉLECTIONNE UNE OPÉRATION", 13, TEXT_MAIN)
+	hint.anchor_left = 0.54
+	hint.anchor_top = 0.83
+	hint.anchor_right = 0.96
+	hint.anchor_bottom = 0.91
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	page.add_child(hint)
+	_page(holder, "home", page)
 
 func _join_page(holder: Control) -> void:
 	var panel := PanelContainer.new()
