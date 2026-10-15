@@ -29,7 +29,9 @@ func _ready() -> void:
     title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     box.add_child(title)
     var sub := Label.new()
-    sub.text = "TACTICAL COMBAT  •  MULTIPLAYER FPS"\n    sub.add_theme_color_override("font_color", Color(0.72, 0.74, 0.78))\n    sub.add_theme_font_size_override("font_size", 16)
+    sub.text = "TACTICAL COMBAT  •  MULTIPLAYER FPS"
+    sub.add_theme_color_override("font_color", Color(0.72, 0.74, 0.78))
+    sub.add_theme_font_size_override("font_size", 16)
     sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     box.add_child(sub)
     var holder := Control.new()
