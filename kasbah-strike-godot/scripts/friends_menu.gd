@@ -1,6 +1,7 @@
 class_name FriendsMenu extends VBoxContainer
 ## Amis (sans serveur) : liste locale pseudo + dernier code de salon.
 signal join_requested(code: String)
+signal closed
 const PATH := "user://friends.json"
 var friends: Array = []
 var _list: VBoxContainer
@@ -12,6 +13,20 @@ func _ready() -> void:
         var d = JSON.parse_string(FileAccess.get_file_as_string(PATH))
         if d is Array:
             friends = d
+    var header := HBoxContainer.new()
+    header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+    var title := Label.new()
+    title.text = "AMIS"
+    title.add_theme_font_size_override("font_size", 26)
+    title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+    header.add_child(title)
+    var back := Button.new()
+    back.text = "✕  RETOUR AU MENU"
+    back.tooltip_text = "Fermer la page Amis"
+    back.pressed.connect(func(): closed.emit())
+    header.add_child(back)
+    add_child(header)
+
     var me := Label.new()
     me.text = "Ton identifiant : %s#%s" % [Settings.v.nickname, Settings.v.friend_id]
     add_child(me)
