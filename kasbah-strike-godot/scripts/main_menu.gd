@@ -8,11 +8,11 @@ func _ready() -> void:
     set_anchors_preset(Control.PRESET_FULL_RECT)
     Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
     var bg := ColorRect.new()
-    bg.color = Color(0.15, 0.12, 0.09)
+    bg.color = Color(0.025, 0.028, 0.035)
     bg.set_anchors_preset(Control.PRESET_FULL_RECT)
     add_child(bg)
     var band := ColorRect.new()
-    band.color = Color(0.80, 0.68, 0.45, 0.12)
+    band.color = Color(0.85, 0.035, 0.06, 0.16)
     band.set_anchors_preset(Control.PRESET_FULL_RECT)
     band.anchor_top = 0.62
     add_child(band)
@@ -23,13 +23,15 @@ func _ready() -> void:
     box.add_theme_constant_override("separation", 14)
     center.add_child(box)
     var title := Label.new()
-    title.text = "KASBAH STRIKE"
+    title.text = "BLACKSITE"
     title.add_theme_font_size_override("font_size", 64)
-    title.add_theme_color_override("font_color", Color(0.93, 0.78, 0.45))
+    title.add_theme_color_override("font_color", Color(0.92, 0.045, 0.075))
     title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     box.add_child(title)
     var sub := Label.new()
-    sub.text = "FPS tactique multijoueur entre amis"
+    sub.text = "TACTICAL COMBAT  •  MULTIPLAYER FPS"
+    sub.add_theme_color_override("font_color", Color(0.72, 0.74, 0.78))
+    sub.add_theme_font_size_override("font_size", 16)
     sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     box.add_child(sub)
     var holder := Control.new()
