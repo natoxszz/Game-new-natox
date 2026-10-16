@@ -12,7 +12,7 @@ const DEFAULTS := {
     "preset": 2, "shadows": 2, "msaa": 1, "ssao": true, "glow": true, "scale3d": 1.0, "fog": true,
     "vol_master": 1.0, "vol_fx": 1.0, "vol_music": 0.6, "vol_amb": 0.8, "vol_steps": 1.0, "mute_unfocus": true,
     "hud_scale": 1.0, "radar_scale": 1.0, "show_fps": false,
-    "port": 7777,
+    "port": 7777, "selected_map": "kasbah",
 }
 const DEFAULT_KEYS := {
     "move_forward": KEY_W, "move_back": KEY_S, "move_left": KEY_A, "move_right": KEY_D,
