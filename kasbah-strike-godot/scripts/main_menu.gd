@@ -5,6 +5,7 @@ extends Control
 var pages: Dictionary = {}
 var status: Label
 var _joining := false
+var pending_mode := ""
 
 const BG_DARK := Color(0.025, 0.032, 0.041, 0.94)
 const PANEL := Color(0.055, 0.067, 0.078, 0.94)
@@ -99,14 +100,12 @@ func _build_interface() -> void:
 
 	_nav_button(nav, "01   JOUER", func(): _show("home"), true)
 	_nav_button(nav, "02   AMIS", func(): _show("friends"))
-	_nav_button(nav, "03   JOUER EN SOLO", _start_solo)
+	_nav_button(nav, "03   JOUER EN SOLO", func():
+		pending_mode = "solo"
+		_show("maps"))
 	_nav_button(nav, "04   HÉBERGER UNE PARTIE", func():
-		Settings.save()
-		var err := Net.host(int(Settings.v.port))
-		if err == OK:
-			get_tree().change_scene_to_file("res://scenes/lobby.tscn")
-		else:
-			status.text = "Hébergement impossible. Erreur %d" % err)
+		pending_mode = "host"
+		_show("maps"))
 	_nav_button(nav, "05   REJOINDRE UNE PARTIE", func(): _show("join"))
 	_nav_button(nav, "06   OPTIONS", func(): _show("options"))
 
@@ -146,9 +145,22 @@ func _build_interface() -> void:
 	add_child(status)
 
 func _start_solo() -> void:
+	pending_mode = "solo"
+	_show("maps")
+
+func _select_map(map_id: String) -> void:
+	Settings.set_val("selected_map", map_id)
 	Settings.save()
-	Net.solo()
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	if pending_mode == "solo":
+		Net.solo()
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
+	elif pending_mode == "host":
+		var err := Net.host(int(Settings.v.port))
+		if err == OK:
+			get_tree().change_scene_to_file("res://scenes/lobby.tscn")
+		else:
+			status.text = "Hébergement impossible. Erreur %d" % err
+			_show("maps")
 
 func _build_pages() -> void:
 	var holder := Control.new()
@@ -160,6 +172,7 @@ func _build_pages() -> void:
 	add_child(holder)
 
 	_home(holder)
+	_map_page(holder)
 	_join_page(holder)
 
 	var friends := FriendsMenu.new()
@@ -183,6 +196,22 @@ func _home(holder: Control) -> void:
 	hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	page.add_child(hint)
 	_page(holder, "home", page)
+
+func _map_page(holder: Control) -> void:
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(520, 340)
+	_style_panel(panel)
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 12)
+	panel.add_child(vb)
+	vb.add_child(_label("CONFIGURATION DE L’OPÉRATION", 12, ACCENT))
+	vb.add_child(_label("CHOISIR UNE MAP", 28, TEXT_MAIN))
+	var help := _label("Sélectionne le terrain avant de lancer la partie.", 14, TEXT_MUTED)
+	vb.add_child(help)
+	_action_button(vb, "KASBAH  /  MAP ORIGINALE", func(): _select_map("kasbah"), true)
+	_action_button(vb, "DUST II  /  STYLE COUNTER-STRIKE", func(): _select_map("dust2"), false)
+	_action_button(vb, "RETOUR AU MENU", func(): _show("home"), false)
+	_page(holder, "maps", panel)
 
 func _join_page(holder: Control) -> void:
 	var panel := PanelContainer.new()
