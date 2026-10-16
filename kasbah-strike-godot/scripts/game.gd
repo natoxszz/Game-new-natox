@@ -2,7 +2,7 @@ extends Node3D
 ## Partie : construit la map, l'environnement, fait apparaitre les joueurs, gere kills et pause.
 signal kill_announced(text: String)
 
-var map: DustMap
+var map
 var players: Node3D
 var env: Environment
 var sun: DirectionalLight3D
@@ -17,7 +17,7 @@ var _pause_box: VBoxContainer
 var _paused := false
 
 func _ready() -> void:
-    map = DustMap.new()
+    map = Dust2Map.new() if str(Settings.v.get("selected_map", "kasbah")) == "dust2" else DustMap.new()
     add_child(map)
     map.build()
     _make_env()
