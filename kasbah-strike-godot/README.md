@@ -1,4 +1,4 @@
-# Kasbah Strike (prototype Godot 4)
+# BLACKSITE (prototype Godot 4)
 
 FPS tactique multijoueur entre amis, 100 % gratuit (Godot 4 + réseau ENet intégré).
 
